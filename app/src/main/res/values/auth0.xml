@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="com_auth0_scheme">conecta</string>
+    <string name="com_auth0_domain">dev-a8n8uoz6yo02wcvy.us.auth0.com</string>
+    <string name="com_auth0_client_id">RNIxDz64G7qNKKiLReFaYJ3BJEJxYYa3</string>
+</resources>
