@@ -42,9 +42,9 @@ fun NavBar(navController: NavController) {
                 selected = selected,
                 onClick = {
                     if (!selected) navController.navigate(item.route) {
-                        popUpTo(navController.graph.startDestinationId) { saveState = true }
+                        popUpTo(navController.graph.startDestinationId) { saveState = false }
                         launchSingleTop = true
-                        restoreState = true
+                        //restoreState = true
                     }
                 },
                 icon = {
