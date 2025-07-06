@@ -44,8 +44,8 @@ fun CareersContent(
                 ProfileItem(
                     id = it.id,
                     name = it.name,
-                    selectedIds = state.selectedCareers,
-                    onItemClick = { onEvent(CareerEvent.FollowCareer(it.id)) },
+                    selectedIds = state.selectedCurriculums,
+                    onItemClick = { onEvent(CareerEvent.FollowCurriculum(it.id)) },
                 )
             }
         }

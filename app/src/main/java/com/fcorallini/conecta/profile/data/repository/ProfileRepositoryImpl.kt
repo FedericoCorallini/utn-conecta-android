@@ -7,6 +7,8 @@ import com.fcorallini.conecta.core.domain.model.Subject
 import com.fcorallini.conecta.creation.data.mapper.toDomain
 import com.fcorallini.conecta.creation.data.model.dto.SubjectDto
 import com.fcorallini.conecta.profile.data.mapper.toDomain
+import com.fcorallini.conecta.profile.data.model.dto.CurriculumIdsDto
+import com.fcorallini.conecta.profile.data.model.dto.request.ProfileRequest
 import com.fcorallini.conecta.profile.data.remote.ProfileApi
 import com.fcorallini.conecta.profile.domain.repository.ProfileRepository
 import retrofit2.HttpException
@@ -29,6 +31,22 @@ class ProfileRepositoryImpl @Inject constructor(
             api.getStudentProfile(studentId.toString()).curriculums.map {
                 it.toDomain()
             }
+        }
+    }
+
+    override suspend fun setNewStudentProfile(studentId: Long, curriculums : Set<Long>, subjects : Set<Long>): Result<Unit> {
+        return resultOf {
+            api.setStudentProfile(
+                studentId = studentId.toString(),
+                profile = ProfileRequest(
+                    curriculums = curriculums.map {
+                        CurriculumIdsDto(
+                            curriculumId = it,
+                            subjectId = subjects.toList()
+                        )
+                    }
+                )
+            )
         }
     }
 }

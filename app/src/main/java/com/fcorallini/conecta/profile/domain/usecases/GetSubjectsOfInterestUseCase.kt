@@ -7,11 +7,11 @@ import javax.inject.Inject
 
 class GetSubjectsOfInterestUseCase @Inject constructor(
     private val getUserIdUseCase: GetUserIdUseCase,
-    private val repository: ProfileRepository
+    private val repository: ProfileRepository,
+    private val getFollowedCurriculumsUseCase: GetFollowedCurriculumsUseCase
 ){
     suspend operator fun invoke() : List<Subject> {
-        val userId = getUserIdUseCase()
-        val followedCurriculumsIds = repository.getFollowedCurriculums(userId).getOrDefault(emptyList()).map { it.id } + 0 // TODO eliminate 0 when curriculums have their ids
+        val followedCurriculumsIds = getFollowedCurriculumsUseCase()
         return repository.getCareers().getOrDefault(
             emptyList()
         ).flatMap {

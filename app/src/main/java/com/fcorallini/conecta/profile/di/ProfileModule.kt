@@ -29,7 +29,7 @@ object ProfileModule {
             .build()
 
         return Retrofit.Builder()
-            .baseUrl("http://192.168.1.26:8080/")
+            .baseUrl("http://10.0.2.2:8080/")
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .client(client)
             .build()

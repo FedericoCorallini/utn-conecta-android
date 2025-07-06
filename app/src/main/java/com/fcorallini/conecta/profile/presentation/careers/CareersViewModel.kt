@@ -6,13 +6,17 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fcorallini.conecta.profile.domain.usecases.GetCurriculumsUseCase
+import com.fcorallini.conecta.profile.domain.usecases.GetFollowedCurriculumsUseCase
+import com.fcorallini.conecta.profile.domain.usecases.SetStudentProfileUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class CareersViewModel @Inject constructor(
-    private val getCurriculumsUseCase: GetCurriculumsUseCase
+    private val getCurriculumsUseCase: GetCurriculumsUseCase,
+    private val getFollowedCurriculumsUseCase: GetFollowedCurriculumsUseCase,
+    private val setStudentProfileUseCase: SetStudentProfileUseCase
 ) : ViewModel() {
 
     var state by mutableStateOf(CareersState())
@@ -21,21 +25,33 @@ class CareersViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             val curriculums = getCurriculumsUseCase()
-            state = state.copy(curriculumList = curriculums)
+            val studentCurriculums = getFollowedCurriculumsUseCase().toList()
+            state = state.copy(
+                curriculumList = curriculums,
+                selectedCurriculums = studentCurriculums
+            )
         }
     }
 
     fun onEvent(event: CareerEvent) {
         when(event) {
-            is CareerEvent.FollowCareer -> {
-                val newSelectedCareers = if(state.selectedCareers.contains(event.id)) {
-                    state.selectedCareers - event.id
+            is CareerEvent.FollowCurriculum -> {
+                val newSelectedCurriculums = if(state.selectedCurriculums.contains(event.id)) {
+                    state.selectedCurriculums - event.id
                 }else{
-                    state.selectedCareers + event.id
+                    state.selectedCurriculums + event.id
                 }
-                state = state.copy(
-                    selectedCareers = newSelectedCareers // TODO call api to set new profile
-                )
+                viewModelScope.launch {
+                    val success = setStudentProfileUseCase(
+                        curriculumsSet = newSelectedCurriculums.toSet(),
+                        subjectsSet = null
+                    )
+                    if (success) {
+                        state = state.copy(
+                            selectedCurriculums = newSelectedCurriculums // TODO call api to set new profile
+                        )
+                    }
+                }
             }
         }
     }
