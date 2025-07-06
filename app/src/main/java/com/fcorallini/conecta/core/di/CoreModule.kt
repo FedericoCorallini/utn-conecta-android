@@ -6,9 +6,8 @@ import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile
 import com.fcorallini.conecta.authentication.domain.repository.AuthRepository
-import com.fcorallini.conecta.creation.data.remote.CreationApi
 import com.fcorallini.conecta.authentication.data.remote.TokenInterceptor
-import com.fcorallini.conecta.authentication.data.repository.AuthRepositoryImpl
+import com.fcorallini.conecta.core.data.remote.CoreApi
 import com.fcorallini.conecta.core.data.repository.CoreRepositoryImpl
 import com.fcorallini.conecta.core.domain.repository.CoreRepository
 import com.squareup.moshi.Moshi
@@ -49,7 +48,25 @@ object CoreModule {
 
     @Provides
     @Singleton
-    fun provideCoreRepository(dataStore: DataStore<Preferences>) : CoreRepository {
-        return CoreRepositoryImpl(dataStore)
+    fun provideCoreApi(client : OkHttpClient) : CoreApi {
+        val moshi = Moshi.Builder()
+            .add(KotlinJsonAdapterFactory())
+            .build()
+
+        return Retrofit.Builder()
+            .baseUrl("http://10.0.2.2:8080/")
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .client(client)
+            .build()
+            .create(CoreApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCoreRepository(
+        dataStore: DataStore<Preferences>,
+        coreApi: CoreApi
+    ) : CoreRepository {
+        return CoreRepositoryImpl(dataStore, coreApi)
     }
 }

@@ -7,7 +7,6 @@ class GetUserIdUseCase @Inject constructor(
     private val coreRepository: CoreRepository
 ) {
     suspend operator fun invoke() : Long {
-        return 3
-        // return coreRepository.getUserId()
+        return coreRepository.getUserId()
     }
 }
