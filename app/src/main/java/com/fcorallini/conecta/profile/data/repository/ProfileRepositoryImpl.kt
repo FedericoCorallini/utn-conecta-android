@@ -49,4 +49,12 @@ class ProfileRepositoryImpl @Inject constructor(
             )
         }
     }
+
+    override suspend fun getFollowedSubjectsIds(studentId: Long): Result<List<Long>> {
+        return resultOf {
+            api.getStudentProfile(studentId.toString()).curriculums.flatMap {
+                it.subjects.map { it.id }
+            }
+        }
+    }
 }

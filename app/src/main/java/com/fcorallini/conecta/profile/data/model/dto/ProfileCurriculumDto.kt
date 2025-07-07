@@ -1,5 +1,6 @@
 package com.fcorallini.conecta.profile.data.model.dto
 
+import com.fcorallini.conecta.creation.data.model.dto.SubjectDto
 import com.squareup.moshi.Json
 
 data class ProfileCurriculumDto(
@@ -10,5 +11,7 @@ data class ProfileCurriculumDto(
     val curriculumName: String,
 
     @Json(name = "career_name")
-    val careerName: String
+    val careerName: String,
+
+    val subjects: List<SubjectDto>
 )

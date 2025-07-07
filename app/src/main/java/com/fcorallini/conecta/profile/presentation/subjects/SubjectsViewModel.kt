@@ -5,14 +5,18 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.fcorallini.conecta.profile.domain.usecases.GetFollowedSubjectsIdsUseCase
 import com.fcorallini.conecta.profile.domain.usecases.GetSubjectsOfInterestUseCase
+import com.fcorallini.conecta.profile.domain.usecases.SetStudentProfileUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SubjectsViewModel @Inject constructor(
-    private val getSubjectsOfInterestUseCase : GetSubjectsOfInterestUseCase
+    private val getSubjectsOfInterestUseCase : GetSubjectsOfInterestUseCase,
+    private val getFollowedSubjectsIdsUseCase: GetFollowedSubjectsIdsUseCase,
+    private val setStudentProfileUseCase: SetStudentProfileUseCase
 ) : ViewModel(){
 
     var state by mutableStateOf(SubjectsState())
@@ -21,7 +25,12 @@ class SubjectsViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             val subjects = getSubjectsOfInterestUseCase()
-            state = state.copy(subjects = subjects)
+            val studentSubjects = getFollowedSubjectsIdsUseCase()
+            val (followed, notFollowed) = subjects.partition { studentSubjects.contains(it.id) }
+            state = state.copy(
+                subjects = followed + notFollowed,
+                followedSubjectsIds = studentSubjects
+            )
         }
     }
 
@@ -33,9 +42,17 @@ class SubjectsViewModel @Inject constructor(
                 }else{
                     state.followedSubjectsIds + event.id
                 }
-                state = state.copy(
-                    followedSubjectsIds = newFollowed // TODO call api to set new profile
-                )
+                viewModelScope.launch {
+                    val success = setStudentProfileUseCase(
+                        curriculumsSet = null,
+                        subjectsSet = newFollowed.toSet()
+                    )
+                    if (success) {
+                        state = state.copy(
+                            followedSubjectsIds = newFollowed
+                        )
+                    }
+                }
             }
         }
     }

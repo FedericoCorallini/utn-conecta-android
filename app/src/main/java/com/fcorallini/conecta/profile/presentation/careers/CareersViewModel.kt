@@ -26,8 +26,9 @@ class CareersViewModel @Inject constructor(
         viewModelScope.launch {
             val curriculums = getCurriculumsUseCase()
             val studentCurriculums = getFollowedCurriculumsUseCase().toList()
+            val (followed, notFollowed) = curriculums.partition { studentCurriculums.contains(it.id) }
             state = state.copy(
-                curriculumList = curriculums,
+                curriculumList = followed + notFollowed,
                 selectedCurriculums = studentCurriculums
             )
         }

@@ -6,7 +6,6 @@ import com.fcorallini.conecta.profile.domain.repository.ProfileRepository
 import javax.inject.Inject
 
 class GetSubjectsOfInterestUseCase @Inject constructor(
-    private val getUserIdUseCase: GetUserIdUseCase,
     private val repository: ProfileRepository,
     private val getFollowedCurriculumsUseCase: GetFollowedCurriculumsUseCase
 ){
