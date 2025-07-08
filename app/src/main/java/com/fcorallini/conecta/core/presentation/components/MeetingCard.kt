@@ -119,8 +119,9 @@ fun PreviewMeetingCard() {
                     isVirtual = false
                 ),
                 subject = Subject(
-                    1,"Analisis Matematico"
-                )
+                    1, "Analisis Matematico"
+                ),
+                id = 0
             ) ,
             onJoin = {},
             isJoined = true

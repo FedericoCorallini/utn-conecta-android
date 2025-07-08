@@ -33,12 +33,13 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     navController: NavController
 ) {
-    HomeContent(viewModel.state, navController)
+    HomeContent(viewModel.state, viewModel::onEvent, navController)
 }
 
 @Composable
 fun HomeContent(
     state: HomeState,
+    event: (HomeEvent) -> Unit,
     navController: NavController
 ) {
     Scaffold(
@@ -67,8 +68,8 @@ fun HomeContent(
             items(state.meetingList) { meeting ->
                 MeetingCard(
                     meeting = meeting,
-                    isJoined = false,
-                    onJoin = {}
+                    isJoined = state.joinedMeetingIds.contains(meeting.id),
+                    onJoin = {event.invoke(HomeEvent.JoinOrLeaveEvent(meeting.id))}
                 )
             }
         }
@@ -94,8 +95,9 @@ fun PreviewHomeScreen() {
                             isVirtual = false
                         ),
                         subject = Subject(
-                            1,"Analisis Matematico"
-                        )
+                            1, "Analisis Matematico"
+                        ),
+                        id = 0
                     ),
                     Meeting(
                         date = LocalDate.now(),
@@ -110,10 +112,12 @@ fun PreviewHomeScreen() {
                         ),
                         subject = Subject(
                             1,"Analisis Matematico"
-                        )
+                        ),
+                        id = 0
                     )
                 )
             ),
+            {},
             rememberNavController()
         )
     }

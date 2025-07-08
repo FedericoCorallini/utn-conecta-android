@@ -4,6 +4,7 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 data class Meeting(
+    val id : Long,
     val date : LocalDate,
     val startTime : LocalTime,
     val endTime : LocalTime,

@@ -49,7 +49,7 @@ class CareersViewModel @Inject constructor(
                     )
                     if (success) {
                         state = state.copy(
-                            selectedCurriculums = newSelectedCurriculums // TODO call api to set new profile
+                            selectedCurriculums = newSelectedCurriculums
                         )
                     }
                 }

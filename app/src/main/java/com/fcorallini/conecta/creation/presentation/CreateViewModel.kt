@@ -116,6 +116,7 @@ class CreateViewModel @Inject constructor(
             viewModelScope.launch {
                 val message = createMeetingUseCase(
                     meeting = Meeting(
+                        id = 0,
                         date = state.date,
                         startTime = state.startTime,
                         endTime = state.endTime,

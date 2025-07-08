@@ -15,12 +15,16 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import com.auth0.android.callback.Callback
 import com.fcorallini.conecta.authentication.domain.usecases.SaveJwtTokenUseCase
+import com.fcorallini.conecta.core.domain.usecases.SaveUserEmailUseCase
+import com.fcorallini.conecta.core.domain.usecases.SaveUserIdUseCase
 import kotlinx.coroutines.launch
 
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val saveJwtTokenUseCase: SaveJwtTokenUseCase
+    private val saveJwtTokenUseCase: SaveJwtTokenUseCase,
+    private val saveUserEmailUseCase: SaveUserEmailUseCase,
+    private val saveUserIdUseCase: SaveUserIdUseCase
 ) : ViewModel(){
 
     var token by mutableStateOf("")
@@ -39,10 +43,13 @@ class LoginViewModel @Inject constructor(
 
             override fun onSuccess(credentials: Credentials) {
                 val accessToken = credentials.accessToken
+                val userEmail = credentials.user.email ?: ""
                 token = accessToken
                 Log.d("token", accessToken)
                 viewModelScope.launch {
                     saveJwtTokenUseCase(accessToken)
+                    saveUserEmailUseCase(userEmail)
+                    saveUserIdUseCase()
                     navigate()
                 }
             }

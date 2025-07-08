@@ -37,7 +37,7 @@ class CreationRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun create(meeting: Meeting) : Result<Unit> {
+    override suspend fun create(meeting: Meeting, studentId: Long) : Result<Unit> {
         return try {
             api.createMeeting(
                 meeting = MeetingCreationRequest(
@@ -50,7 +50,7 @@ class CreationRepositoryImpl @Inject constructor(
                         locationId = meeting.studyPlace.id ?: 0,
                         details = meeting.studyPlace.details
                     ),
-                    idCreator = 1,
+                    idCreator = studentId,
                     idSubject = meeting.subject.id
                 )
             )
