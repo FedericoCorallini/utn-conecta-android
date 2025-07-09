@@ -88,7 +88,7 @@ fun PreviewHomeScreen() {
                         startTime = LocalTime.now(),
                         endTime = LocalTime.now(),
                         maxStudents = 4,
-                        title = "Analisis Matematico",
+                        title = "Reunion sobre analisis",
                         studyPlace = StudyPlace(
                             id = null,
                             location = "Biblioteca",
@@ -97,14 +97,14 @@ fun PreviewHomeScreen() {
                         subject = Subject(
                             1, "Analisis Matematico"
                         ),
-                        id = 0
+                        id = 1
                     ),
                     Meeting(
                         date = LocalDate.now(),
                         startTime = LocalTime.now(),
                         endTime = LocalTime.now(),
                         maxStudents = 4,
-                        title = "Analisis de Sistemas",
+                        title = "Para el final",
                         studyPlace = StudyPlace(
                             id = null,
                             location = "Biblioteca",
@@ -115,7 +115,7 @@ fun PreviewHomeScreen() {
                         ),
                         id = 0
                     )
-                )
+                ), joinedMeetingIds = listOf(1)
             ),
             {},
             rememberNavController()
