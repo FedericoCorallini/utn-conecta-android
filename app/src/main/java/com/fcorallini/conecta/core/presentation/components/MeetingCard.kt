@@ -25,6 +25,7 @@ import androidx.compose.material.icons.outlined.DateRange
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Place
 import androidx.compose.material.icons.outlined.PlayArrow
+import androidx.compose.material.icons.outlined.ThumbUp
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -69,11 +70,11 @@ fun MeetingCard(
         )
     } else {
         ButtonDefaults.buttonColors(
-            containerColor = MaterialTheme.colorScheme.onErrorContainer
+            containerColor = MaterialTheme.colorScheme.error
         )
     }
 
-    var showRow by remember { mutableStateOf(true) }
+    var showRow by remember { mutableStateOf(false) }
 
     Card(
         modifier = modifier
@@ -94,15 +95,16 @@ fun MeetingCard(
                 modifier = Modifier
                     .clickable { showRow = !showRow }
                     .fillMaxWidth()
-                    .background(MaterialTheme.colorScheme.primaryContainer)
+                    .background(MaterialTheme.colorScheme.inversePrimary)
                     .padding(14.dp)
             ) {
                 Text(
                     text = meeting.subject.name,
                     style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer
+                    fontWeight = FontWeight.Bold
                 )
+                if (isJoined) Icon(imageVector = Icons.Outlined.ThumbUp, contentDescription = null, modifier.align(
+                    Alignment.CenterEnd))
             }
             if(showRow) Row(
                 modifier = Modifier
@@ -140,12 +142,16 @@ fun MeetingCard(
 
                 Column(
                     modifier = Modifier
-                        .padding(end = 12.dp).height(120.dp),
+                        .padding(end = 12.dp)
+                        .height(120.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Bottom
                 ) {
                     TextButton(
-                        onClick = onJoin,
+                        onClick = {
+                            onJoin()
+                            showRow = !showRow
+                        },
                         modifier = Modifier.width(92.dp),
                         shape = CircleShape,
                         colors = buttonColors
