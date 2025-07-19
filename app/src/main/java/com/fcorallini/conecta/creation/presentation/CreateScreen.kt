@@ -69,7 +69,7 @@ fun CreateContent(
 ) {
     Scaffold(
         topBar = { TopBar(
-            title = "Home"
+            title = "Crea tu propia reunion"
         ) },
         bottomBar = { NavBar(navController) }
     )

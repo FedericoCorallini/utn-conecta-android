@@ -15,6 +15,7 @@ fun MeetingResponse.toDomain() : Meeting {
         startTime = LocalTime.of(startTime[0], startTime[1]),
         endTime = LocalTime.of(endTime[0], endTime[1]),
         maxStudents = maxStudents ?: 0,
+        studentsNumber = studentsNumber ?: 0,
         title = title ?: "",
         studyPlace = StudyPlace(
             id = null,

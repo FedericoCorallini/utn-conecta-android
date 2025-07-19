@@ -44,7 +44,7 @@ fun MenuContent(
     val context = LocalContext.current
     Scaffold(
         topBar = { TopBar(
-            title = "Perfil"
+            title = "Edita tu perfil"
         ) },
         bottomBar = { NavBar(navController) }
     ) {

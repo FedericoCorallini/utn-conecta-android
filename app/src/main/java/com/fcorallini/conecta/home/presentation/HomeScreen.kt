@@ -85,14 +85,15 @@ fun PreviewHomeScreen() {
                         subject = Subject(
                             1, "Analisis Matematico"
                         ),
-                        id = 1
+                        id = 1,
+                        studentsNumber = 1
                     ),
                     Meeting(
                         date = LocalDate.now(),
                         startTime = LocalTime.now(),
                         endTime = LocalTime.now(),
                         maxStudents = 4,
-                        title = "Para el final",
+                        title = "Para el final y que pasas si aca le pongo un titulo recontra largo y te rompo toda la ui",
                         studyPlace = StudyPlace(
                             id = null,
                             location = "Biblioteca",
@@ -101,7 +102,8 @@ fun PreviewHomeScreen() {
                         subject = Subject(
                             1,"Analisis Matematico"
                         ),
-                        id = 0
+                        id = 0,
+                        studentsNumber = 1
                     )
                 ), joinedMeetingIds = listOf(1)
             ),

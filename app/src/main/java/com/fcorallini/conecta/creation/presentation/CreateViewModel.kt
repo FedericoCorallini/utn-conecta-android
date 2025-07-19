@@ -132,6 +132,7 @@ class CreateViewModel @Inject constructor(
                             id = state.idSubject,
                             name = state.subjectName
                         ),
+                        studentsNumber = 1
                     )
                 )
                 state = state.copy(toastMessage = message)

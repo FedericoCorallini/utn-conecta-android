@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.fcorallini.conecta.core.domain.model.Curriculum
 import com.fcorallini.conecta.profile.domain.usecases.GetCurriculumsUseCase
 import com.fcorallini.conecta.profile.domain.usecases.GetFollowedCurriculumsUseCase
 import com.fcorallini.conecta.profile.domain.usecases.SetStudentProfileUseCase
@@ -24,7 +25,7 @@ class CareersViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            val curriculums = getCurriculumsUseCase()
+            val curriculums = getCurriculumsUseCase().sortedBy { curriculum: Curriculum -> curriculum.name }
             val studentCurriculums = getFollowedCurriculumsUseCase().toList()
             val (followed, notFollowed) = curriculums.partition { studentCurriculums.contains(it.id) }
             state = state.copy(

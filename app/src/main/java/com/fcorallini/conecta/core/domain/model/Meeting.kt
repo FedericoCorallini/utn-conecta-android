@@ -8,6 +8,7 @@ data class Meeting(
     val date : LocalDate,
     val startTime : LocalTime,
     val endTime : LocalTime,
+    val studentsNumber: Int,
     val maxStudents : Int,
     val title : String,
     val studyPlace : StudyPlace,

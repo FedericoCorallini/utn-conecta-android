@@ -16,8 +16,10 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.AccountCircle
 import androidx.compose.material.icons.outlined.Create
 import androidx.compose.material.icons.outlined.DateRange
+import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.Place
 import androidx.compose.material.icons.outlined.PlayArrow
 import androidx.compose.material.icons.outlined.ThumbUp
@@ -72,9 +74,9 @@ fun MeetingCard(
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 4.dp, vertical = 6.dp)
+            .padding(horizontal = 6.dp, vertical = 6.dp)
             .clickable { onClick() },
-        shape = RoundedCornerShape(16.dp),
+        shape = RoundedCornerShape(14.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.background
@@ -89,12 +91,12 @@ fun MeetingCard(
                     .clickable { expand = !expand }
                     .fillMaxWidth()
                     .background(MaterialTheme.colorScheme.inversePrimary)
-                    .padding(14.dp)
+                    .padding(12.dp)
             ) {
                 Text(
                     text = meeting.subject.name,
-                    style = MaterialTheme.typography.titleLarge.copy(fontSize = 20.sp),
-                    fontWeight = FontWeight(400),
+                    style = MaterialTheme.typography.titleLarge.copy(fontSize = 18.sp),
+                    fontWeight = FontWeight(450),
                     color = MaterialTheme.colorScheme.onPrimary
                 )
                 if (isJoined) Icon(
@@ -106,41 +108,50 @@ fun MeetingCard(
             if(expand) Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 8.dp, bottom = 8.dp),
+                    .padding(top = 6.dp, bottom = 6.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Column(
                     modifier = Modifier
                         .padding(start = 12.dp)
                         .weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(6.dp)
+                    verticalArrangement = Arrangement.spacedBy(5.dp)
                 ) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(imageVector = Icons.Outlined.Create, contentDescription = null)
                         Spacer(Modifier.width(6.dp))
-                        Text(text = meeting.title)
-                    }
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Icon(imageVector = Icons.Outlined.Place, contentDescription = null)
-                        Spacer(Modifier.width(6.dp))
-                        Text(text = meeting.studyPlace.location)
+                        Text(text = meeting.title, maxLines = 1, fontSize = 14.sp)
                     }
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(imageVector = Icons.Outlined.DateRange, contentDescription = null)
                         Spacer(Modifier.width(6.dp))
-                        Text(text = meeting.date.toString().split("-").reversed().joinToString("/"))
+                        Text(
+                            text = meeting.date.toString().split("-").reversed().joinToString("/") + "  -  " +
+                                    meeting.startTime.toString().take(5) + "Hs",
+                            fontSize = 14.sp
+                        )
                     }
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        Icon(imageVector = Icons.Outlined.PlayArrow, contentDescription = null)
+                        Icon(imageVector = Icons.Outlined.Place, contentDescription = null)
                         Spacer(Modifier.width(6.dp))
-                        Text(text = meeting.startTime.toString().take(5) + "Hs - " + meeting.endTime.toString().take(5) + "Hs")
+                        Text(text = meeting.studyPlace.location, fontSize = 14.sp)
                     }
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Icon(imageVector = Icons.Outlined.Person, contentDescription = null)
+                        Spacer(Modifier.width(6.dp))
+                        Text(text = meeting.studentsNumber.toString() + " / " + meeting.maxStudents.toString(), fontSize = 14.sp)
+                    }
+//                    Row(verticalAlignment = Alignment.CenterVertically) {
+//                        Icon(imageVector = Icons.Outlined.PlayArrow, contentDescription = null)
+//                        Spacer(Modifier.width(6.dp))
+//                        Text(text = meeting.startTime.toString().take(5) + "Hs - " + meeting.endTime.toString().take(5) + "Hs", fontSize = 14.sp)
+//                    }
                 }
 
                 Column(
                     modifier = Modifier
                         .padding(end = 12.dp)
-                        .height(118.dp),
+                        .height(116.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Bottom
                 ) {
@@ -151,7 +162,8 @@ fun MeetingCard(
                         },
                         modifier = Modifier.width(92.dp),
                         shape = CircleShape,
-                        colors = buttonColors
+                        colors = buttonColors,
+                        enabled = !((!isJoined) && (meeting.studentsNumber == meeting.maxStudents))
                     ) {
                         Text(text = buttonLabel)
                     }
@@ -181,7 +193,8 @@ fun PreviewMeetingCard() {
                 subject = Subject(
                     1, "Analisis Matematico"
                 ),
-                id = 0
+                id = 0,
+                studentsNumber = 1
             ) ,
             onJoin = {},
             isJoined = false
