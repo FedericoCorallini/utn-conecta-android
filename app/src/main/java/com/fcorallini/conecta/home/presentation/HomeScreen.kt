@@ -48,7 +48,7 @@ fun HomeContent(
 ) {
     Scaffold(
         topBar = { TopBar(
-            title = "Home"
+            title = "Reuniones propuestas"
         ) },
         bottomBar = { NavBar(navController) }
     ) {

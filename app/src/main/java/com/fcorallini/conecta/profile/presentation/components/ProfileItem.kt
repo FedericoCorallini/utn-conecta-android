@@ -47,7 +47,8 @@ fun ProfileItem(
             .background(if(selected) MaterialTheme.colorScheme.inversePrimary else MaterialTheme.colorScheme.background,
                 shape = RoundedCornerShape(8.dp)
             )
-            .border(width = 1.5.dp, color = MaterialTheme.colorScheme.primary, shape = RoundedCornerShape(8.dp))
+            .border(width = 1.5.dp, color =
+                if(selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary, shape = RoundedCornerShape(8.dp))
             .clickable { onItemClick() }
             .padding(14.dp),
         horizontalArrangement = Arrangement.SpaceBetween,

@@ -39,11 +39,11 @@ fun MenuItem(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .height(58.dp)
+            .height(52.dp)
             .clip(RoundedCornerShape(8.dp))
             .clickable { onClick() }
-            .background(Color.White)
-            .border(width = 1.5.dp, color = MaterialTheme.colorScheme.primary, shape = RoundedCornerShape(8.dp))
+//            .background(Color.White)
+//            .border(width = 1.5.dp, color = MaterialTheme.colorScheme.secondary, shape = RoundedCornerShape(8.dp))
             .padding(8.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
@@ -71,7 +71,7 @@ fun MenuItem(
         Icon(
             imageVector = Icons.Default.KeyboardArrowRight,
             contentDescription = null,
-            tint = MaterialTheme.colorScheme.primary
+            tint = MaterialTheme.colorScheme.secondary
         )
     }
 }
