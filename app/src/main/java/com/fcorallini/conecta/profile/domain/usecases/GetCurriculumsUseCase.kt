@@ -15,7 +15,8 @@ class GetCurriculumsUseCase @Inject constructor(
                 it.curriculums.map {
                     Curriculum(
                         id = it.id, // TODO backend needs to provide curriculum ids
-                        name = careerName + ":\n" + it.name,
+//                        name = careerName + ":\n" + it.name,
+                        name = careerName,
                         subjects = emptyList()
                     )
                 }

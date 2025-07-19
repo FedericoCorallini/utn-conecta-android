@@ -43,7 +43,7 @@ fun MenuContent(
         ) },
         bottomBar = { NavBar(navController) }
     ) {
-        Column(modifier = Modifier.padding(it).padding(12.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        Column(modifier = Modifier.padding(it).padding(12.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
             MenuItem(
                 text = "Mis carreras",
                 icon = Icons.Default.Star,

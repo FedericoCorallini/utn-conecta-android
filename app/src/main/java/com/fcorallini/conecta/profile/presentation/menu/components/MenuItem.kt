@@ -1,12 +1,14 @@
 package com.fcorallini.conecta.profile.presentation.menu.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -35,10 +37,14 @@ fun MenuItem(
     modifier: Modifier = Modifier
 ) {
     Row(
-        modifier = modifier.fillMaxWidth().clip(RoundedCornerShape(8.dp)).clickable {
-            onClick()
-        }.background(Color.White)
-            .padding(6.dp),
+        modifier = modifier
+            .fillMaxWidth()
+            .height(58.dp)
+            .clip(RoundedCornerShape(8.dp))
+            .clickable { onClick() }
+            .background(Color.White)
+            .border(width = 1.5.dp, color = MaterialTheme.colorScheme.primary, shape = RoundedCornerShape(8.dp))
+            .padding(8.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
@@ -57,7 +63,7 @@ fun MenuItem(
             Spacer(modifier = Modifier.width(14.dp))
             Text(
                 text = text,
-                color = MaterialTheme.colorScheme.tertiary,
+                color = MaterialTheme.colorScheme.secondary,
                 fontWeight = FontWeight.Medium,
                 fontSize = 16.sp
             )
@@ -65,7 +71,7 @@ fun MenuItem(
         Icon(
             imageVector = Icons.Default.KeyboardArrowRight,
             contentDescription = null,
-            tint = MaterialTheme.colorScheme.tertiary
+            tint = MaterialTheme.colorScheme.primary
         )
     }
 }

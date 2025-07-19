@@ -113,7 +113,7 @@ fun MeetingCard(
                     modifier = Modifier
                         .padding(start = 12.dp)
                         .weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                    verticalArrangement = Arrangement.spacedBy(6.dp)
                 ) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(imageVector = Icons.Outlined.Create, contentDescription = null)
@@ -140,7 +140,7 @@ fun MeetingCard(
                 Column(
                     modifier = Modifier
                         .padding(end = 12.dp)
-                        .height(112.dp),
+                        .height(118.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Bottom
                 ) {
