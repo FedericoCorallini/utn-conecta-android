@@ -16,12 +16,10 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.AccountCircle
 import androidx.compose.material.icons.outlined.Create
 import androidx.compose.material.icons.outlined.DateRange
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.Place
-import androidx.compose.material.icons.outlined.PlayArrow
 import androidx.compose.material.icons.outlined.ThumbUp
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -178,7 +176,7 @@ fun MeetingCard(
 @Composable
 fun PreviewMeetingCard() {
     ConectaTheme {
-        MeetingCard(
+        MeetingFullCard(
             meeting = Meeting(
                 date = LocalDate.now(),
                 startTime = LocalTime.now(),

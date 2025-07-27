@@ -20,7 +20,8 @@ fun MeetingResponse.toDomain() : Meeting {
         studyPlace = StudyPlace(
             id = null,
             location = studyPlaceLocationName ?: "",
-            isVirtual = studyPlaceIsVirtual ?: false
+            isVirtual = studyPlaceIsVirtual ?: false,
+            details = studyPlaceDetails ?: ""
         ),
         subject = Subject(
             id = 0,

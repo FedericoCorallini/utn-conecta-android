@@ -1,26 +1,16 @@
-package com.fcorallini.conecta.home.presentation
+package com.fcorallini.conecta.home.presentation.home
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.fcorallini.conecta.R
 import com.fcorallini.conecta.core.domain.model.Meeting
 import com.fcorallini.conecta.core.domain.model.StudyPlace
 import com.fcorallini.conecta.core.domain.model.Subject
@@ -28,7 +18,7 @@ import com.fcorallini.conecta.core.presentation.components.MeetingCard
 import com.fcorallini.conecta.core.presentation.components.NavBar
 import com.fcorallini.conecta.core.presentation.components.TopBar
 import com.fcorallini.conecta.core.presentation.theme.ConectaTheme
-import com.fcorallini.conecta.home.presentation.components.SelectedSubjectChips
+import com.fcorallini.conecta.navigation.Routes
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -52,12 +42,15 @@ fun HomeContent(
         ) },
         bottomBar = { NavBar(navController) }
     ) {
-        LazyColumn(modifier = Modifier.padding(it).padding(horizontal = 8.dp, vertical = 4.dp)) {
+        LazyColumn(modifier = Modifier
+            .padding(it)
+            .padding(horizontal = 8.dp, vertical = 4.dp)) {
             items(state.meetingList) { meeting ->
                 MeetingCard(
                     meeting = meeting,
                     isJoined = state.joinedMeetingIds.contains(meeting.id),
-                    onJoin = {event.invoke(HomeEvent.JoinOrLeaveEvent(meeting.id))}
+                    onJoin = {event.invoke(HomeEvent.JoinOrLeaveEvent(meeting.id))},
+                    onClick = { navController.navigate(Routes.Detail(meeting.id)) }
                 )
             }
         }
