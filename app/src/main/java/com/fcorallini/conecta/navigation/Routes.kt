@@ -21,4 +21,7 @@ interface Routes {
 
     @Serializable
     object Subjects : Routes
+
+    @Serializable
+    data class Detail(val id : Long) : Routes
 }

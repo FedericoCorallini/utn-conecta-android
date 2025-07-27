@@ -1,4 +1,4 @@
-package com.fcorallini.conecta.home.presentation
+package com.fcorallini.conecta.home.presentation.home
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
