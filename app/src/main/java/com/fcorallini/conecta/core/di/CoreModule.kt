@@ -10,6 +10,7 @@ import com.fcorallini.conecta.authentication.data.remote.TokenInterceptor
 import com.fcorallini.conecta.core.data.remote.CoreApi
 import com.fcorallini.conecta.core.data.repository.CoreRepositoryImpl
 import com.fcorallini.conecta.core.domain.repository.CoreRepository
+import com.fcorallini.conecta.core.domain.usecases.GetUserMeetingsUseCase
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -69,4 +70,13 @@ object CoreModule {
     ) : CoreRepository {
         return CoreRepositoryImpl(dataStore, coreApi)
     }
+
+    @Provides
+    @Singleton
+    fun provideGetUserMeetingsUseCase(
+        coreRepository: CoreRepository
+    ): GetUserMeetingsUseCase {
+        return GetUserMeetingsUseCase(coreRepository)
+    }
+
 }

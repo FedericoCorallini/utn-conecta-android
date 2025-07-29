@@ -15,47 +15,32 @@ import com.fcorallini.conecta.core.presentation.components.NavBar
 import com.fcorallini.conecta.core.presentation.components.TopBar
 import com.fcorallini.conecta.core.presentation.theme.ConectaTheme
 import com.fcorallini.conecta.core.domain.model.Meeting
-import com.fcorallini.conecta.core.domain.model.StudyPlace
-import com.fcorallini.conecta.core.domain.model.Subject
 import java.time.LocalDate
 import java.time.LocalTime
 import androidx.navigation.compose.rememberNavController
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.fcorallini.conecta.core.domain.repository.CoreRepository
+import com.fcorallini.conecta.core.domain.usecases.GetUserMeetingsUseCase
 import com.fcorallini.conecta.core.presentation.components.DatePickerField
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun CalendarScreen(navController: NavController) {
+fun CalendarScreen(
+    navController: NavController,
+    viewModel: CalendarViewModel = hiltViewModel()
+) {
+    val meetings by viewModel.meetings.collectAsState()
+
+    LaunchedEffect(Unit) {
+        viewModel.loadMeetings()
+    }
+
     val today = remember { LocalDate.now() }
     var selectedDate by remember { mutableStateOf(today) }
     var selectedMeeting by remember { mutableStateOf<Meeting?>(null) }
 
-    val allMeetings = remember {
-        listOf(
-            Meeting(
-                id = 1,
-                title = "Grupo de Álgebra",
-                date = today,
-                startTime = LocalTime.of(18, 0),
-                endTime = LocalTime.of(19, 0),
-                maxStudents = 6,
-                subject = Subject(1, "Álgebra"),
-                studyPlace = StudyPlace(null, "Aula 201", false)
-            ),
-            Meeting(
-                id = 2,
-                title = "Grupo de Física",
-                date = today.plusDays(1),
-                startTime = LocalTime.of(14, 0),
-                endTime = LocalTime.of(15, 30),
-                maxStudents = 4,
-                subject = Subject(2, "Física"),
-                studyPlace = StudyPlace(null, "Biblioteca", false)
-            )
-        )
-    }
-
-    val meetingsForSelectedDate = allMeetings.filter { it.date == selectedDate }
+    val meetingsForSelectedDate = meetings.filter { it.date == selectedDate }
 
     Scaffold(
         topBar = { TopBar(title = "Calendario") },
@@ -115,14 +100,5 @@ fun CalendarScreen(navController: NavController) {
                 }
             )
         }
-    }
-}
-
-@RequiresApi(Build.VERSION_CODES.O)
-@Preview
-@Composable
-fun PreviewCalendarScreen() {
-    ConectaTheme {
-        CalendarScreen(navController = rememberNavController())
     }
 }
