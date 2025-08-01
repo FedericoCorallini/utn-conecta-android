@@ -6,6 +6,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.fcorallini.conecta.core.data.remote.CoreApi
+import com.fcorallini.conecta.core.data.remote.dto.toDomain
 import com.fcorallini.conecta.core.data.util.resultOf
 import com.fcorallini.conecta.core.domain.model.Meeting
 import com.fcorallini.conecta.core.domain.repository.CoreRepository
@@ -67,6 +68,7 @@ class CoreRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getUserMeetings(userId: Int): List<Meeting> {
-        return coreApi.getMeetingsForUser(userId)
+        return coreApi.getMeetingsForUser(userId).map { it.toDomain() }
     }
+
 }

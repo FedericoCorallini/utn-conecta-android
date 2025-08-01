@@ -71,7 +71,7 @@ fun CalendarScreen(
                         ) {
                             Column(modifier = Modifier.padding(8.dp)) {
                                 Text(meeting.title, style = MaterialTheme.typography.titleMedium)
-                                Text("Hora: ${meeting.startTime} - ${meeting.endTime}")
+                                Text("Desde: ${meeting.startTime} - Hasta: ${meeting.endTime}")
                                 Text("Lugar: ${meeting.studyPlace.location}")
                             }
                         }
