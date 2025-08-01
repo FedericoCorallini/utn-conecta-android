@@ -13,15 +13,9 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.fcorallini.conecta.core.presentation.components.NavBar
 import com.fcorallini.conecta.core.presentation.components.TopBar
-import com.fcorallini.conecta.core.presentation.theme.ConectaTheme
 import com.fcorallini.conecta.core.domain.model.Meeting
 import java.time.LocalDate
-import java.time.LocalTime
-import androidx.navigation.compose.rememberNavController
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.fcorallini.conecta.core.domain.repository.CoreRepository
-import com.fcorallini.conecta.core.domain.usecases.GetUserMeetingsUseCase
 import com.fcorallini.conecta.core.presentation.components.DatePickerField
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -31,6 +25,7 @@ fun CalendarScreen(
     viewModel: CalendarViewModel = hiltViewModel()
 ) {
     val meetings by viewModel.meetings.collectAsState()
+    val errorMessage by viewModel.errorMessage.collectAsState()
 
     LaunchedEffect(Unit) {
         viewModel.loadMeetings()
@@ -41,6 +36,7 @@ fun CalendarScreen(
     var selectedMeeting by remember { mutableStateOf<Meeting?>(null) }
 
     val meetingsForSelectedDate = meetings.filter { it.date == selectedDate }
+
 
     Scaffold(
         topBar = { TopBar(title = "Calendario") },
@@ -59,9 +55,12 @@ fun CalendarScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            if (meetingsForSelectedDate.isEmpty()) {
-                Text("No hay reuniones para esta fecha.")
-            } else {
+            if (errorMessage != null) {
+                Text(errorMessage!!, color = MaterialTheme.colorScheme.error)
+            } else if (meetingsForSelectedDate.isEmpty()){
+                Text("No hay reuniones para esta fecha")
+            }
+            else {
                 LazyColumn {
                     items(meetingsForSelectedDate) { meeting ->
                         Card(

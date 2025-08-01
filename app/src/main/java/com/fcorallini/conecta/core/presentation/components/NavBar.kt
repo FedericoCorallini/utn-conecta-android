@@ -27,7 +27,7 @@ fun NavBar(navController: NavController) {
 
     val items = listOf(
         NavItem("Home", Icons.Outlined.Home, Routes.Home),
-        NavItem("Calendario", Icons.Outlined.DateRange, Routes.Home),
+        NavItem("Calendario", Icons.Outlined.DateRange, Routes.Calendar),
         NavItem("Crear", Icons.Outlined.AddCircle, Routes.Create),
         NavItem("Novedades", Icons.Outlined.Notifications, Routes.Home),
         NavItem("Perfil", Icons.Outlined.AccountCircle, Routes.Profile),

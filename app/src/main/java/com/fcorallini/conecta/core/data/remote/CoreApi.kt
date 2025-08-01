@@ -9,7 +9,6 @@ interface CoreApi {
     @GET("api/students/id")
     suspend fun getStudentId() : Long
 
-    @GET("meetings/user/{userId}")
+    @GET("api/meetings/students/{userId}")
     suspend fun getMeetingsForUser(@Path("userId") userId: Int): List<Meeting>
-
 }
