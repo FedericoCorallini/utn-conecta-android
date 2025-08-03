@@ -1,4 +1,4 @@
-package com.fcorallini.conecta.core.data.remote.dto
+package com.fcorallini.conecta.calendar.data.remote.dto
 
 data class MeetingDto(
     val id: Long,

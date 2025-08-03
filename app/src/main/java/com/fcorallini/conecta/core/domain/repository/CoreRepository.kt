@@ -8,5 +8,4 @@ interface CoreRepository {
     suspend fun putUserEmail(email : String)
     suspend fun getUserEmail() : String
     suspend fun saveUserId()
-    suspend fun getUserMeetings(userId: Int): List<Meeting>
 }

@@ -27,16 +27,15 @@ fun CalendarScreen(
     val meetings by viewModel.meetings.collectAsState()
     val errorMessage by viewModel.errorMessage.collectAsState()
 
-    LaunchedEffect(Unit) {
-        viewModel.loadMeetings()
-    }
-
     val today = remember { LocalDate.now() }
     var selectedDate by remember { mutableStateOf(today) }
     var selectedMeeting by remember { mutableStateOf<Meeting?>(null) }
 
     val meetingsForSelectedDate = meetings.filter { it.date == selectedDate }
 
+    LaunchedEffect(selectedDate) {
+        viewModel.loadMeetings(selectedDate)
+    }
 
     Scaffold(
         topBar = { TopBar(title = "Calendario") },
