@@ -16,6 +16,7 @@ import com.fcorallini.conecta.home.presentation.home.HomeViewModel
 import com.fcorallini.conecta.profile.presentation.careers.CareersScreen
 import com.fcorallini.conecta.profile.presentation.menu.MenuScreen
 import com.fcorallini.conecta.profile.presentation.subjects.SubjectScreen
+import com.fcorallini.conecta.calendar.presentation.CalendarScreen
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -50,6 +51,9 @@ fun NavigationHost(startDestination : Routes = Routes.Login) {
         }
         composable<Routes.Subjects> {
             SubjectScreen(navController = navController)
+        }
+        composable<Routes.Calendar> {
+            CalendarScreen(navController = navController)
         }
     }
 }
