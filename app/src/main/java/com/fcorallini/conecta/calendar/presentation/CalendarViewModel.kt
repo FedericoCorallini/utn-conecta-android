@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CalendarViewModel @Inject constructor(
-    private val getMeetingsForDateUseCase: GetMeetingsForDateUseCase,
+    private val getMeetingsForDateUseCase: GetMeetingsForDateUseCase
 ) : ViewModel() {
 
     private val _meetings = MutableStateFlow<List<Meeting>>(emptyList())

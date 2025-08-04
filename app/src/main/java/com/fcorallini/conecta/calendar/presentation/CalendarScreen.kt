@@ -16,6 +16,7 @@ import com.fcorallini.conecta.core.presentation.components.TopBar
 import com.fcorallini.conecta.core.domain.model.Meeting
 import java.time.LocalDate
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.fcorallini.conecta.calendar.presentation.components.DatePickerDocked
 import com.fcorallini.conecta.core.presentation.components.DatePickerField
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -47,8 +48,7 @@ fun CalendarScreen(
                 .padding(16.dp)
                 .fillMaxSize()
         ) {
-            DatePickerField(
-                date = selectedDate,
+            DatePickerDocked(
                 onDateChange = { selectedDate = it }
             )
 
