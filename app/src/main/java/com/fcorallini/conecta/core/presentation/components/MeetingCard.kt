@@ -9,28 +9,21 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Call
 import androidx.compose.material.icons.outlined.Create
 import androidx.compose.material.icons.outlined.DateRange
-import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.Place
-import androidx.compose.material.icons.outlined.PlayArrow
 import androidx.compose.material.icons.outlined.ThumbUp
-import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -43,9 +36,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.fcorallini.conecta.core.domain.model.Meeting
 import com.fcorallini.conecta.core.domain.model.StudyPlace
 import com.fcorallini.conecta.core.domain.model.Subject
@@ -74,14 +67,14 @@ fun MeetingCard(
         )
     }
 
-    var showRow by remember { mutableStateOf(false) }
+    var expand by remember { mutableStateOf(!isJoined) }
 
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(8.dp)
+            .padding(horizontal = 6.dp, vertical = 6.dp)
             .clickable { onClick() },
-        shape = RoundedCornerShape(20.dp),
+        shape = RoundedCornerShape(14.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.background
@@ -93,68 +86,82 @@ fun MeetingCard(
         ) {
             Box(
                 modifier = Modifier
-                    .clickable { showRow = !showRow }
+                    .clickable { expand = !expand }
                     .fillMaxWidth()
                     .background(MaterialTheme.colorScheme.inversePrimary)
-                    .padding(14.dp)
+                    .padding(12.dp)
             ) {
                 Text(
                     text = meeting.subject.name,
-                    style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Bold
+                    style = MaterialTheme.typography.titleLarge.copy(fontSize = 18.sp),
+                    fontWeight = FontWeight(450),
+                    color = MaterialTheme.colorScheme.onPrimary
                 )
-                if (isJoined) Icon(imageVector = Icons.Outlined.ThumbUp, contentDescription = null, modifier.align(
-                    Alignment.CenterEnd))
+                if (isJoined) Icon(
+                    imageVector = Icons.Outlined.ThumbUp,
+                    contentDescription = null,
+                    modifier.align(Alignment.CenterEnd),
+                    tint = MaterialTheme.colorScheme.onPrimary)
             }
-            if(showRow) Row(
+            if(expand) Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 8.dp, bottom = 12.dp),
+                    .padding(top = 6.dp, bottom = 6.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Column(
                     modifier = Modifier
                         .padding(start = 12.dp)
                         .weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(6.dp)
+                    verticalArrangement = Arrangement.spacedBy(5.dp)
                 ) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(imageVector = Icons.Outlined.Create, contentDescription = null)
                         Spacer(Modifier.width(6.dp))
-                        Text(text = meeting.title)
-                    }
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Icon(imageVector = Icons.Outlined.Place, contentDescription = null)
-                        Spacer(Modifier.width(6.dp))
-                        Text(text = meeting.studyPlace.location)
+                        Text(text = meeting.title, maxLines = 1, fontSize = 14.sp)
                     }
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(imageVector = Icons.Outlined.DateRange, contentDescription = null)
                         Spacer(Modifier.width(6.dp))
-                        Text(text = meeting.date.toString().split("-").reversed().joinToString("/"))
+                        Text(
+                            text = meeting.date.toString().split("-").reversed().joinToString("/") + "  -  " +
+                                    meeting.startTime.toString().take(5) + "Hs",
+                            fontSize = 14.sp
+                        )
                     }
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        Icon(imageVector = Icons.Outlined.PlayArrow, contentDescription = null)
+                        Icon(imageVector = Icons.Outlined.Place, contentDescription = null)
                         Spacer(Modifier.width(6.dp))
-                        Text(text = meeting.startTime.toString().take(5) + "Hs - " + meeting.endTime.toString().take(5) + "Hs")
+                        Text(text = meeting.studyPlace.location, fontSize = 14.sp)
                     }
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Icon(imageVector = Icons.Outlined.Person, contentDescription = null)
+                        Spacer(Modifier.width(6.dp))
+                        Text(text = meeting.studentsNumber.toString() + " / " + meeting.maxStudents.toString(), fontSize = 14.sp)
+                    }
+//                    Row(verticalAlignment = Alignment.CenterVertically) {
+//                        Icon(imageVector = Icons.Outlined.PlayArrow, contentDescription = null)
+//                        Spacer(Modifier.width(6.dp))
+//                        Text(text = meeting.startTime.toString().take(5) + "Hs - " + meeting.endTime.toString().take(5) + "Hs", fontSize = 14.sp)
+//                    }
                 }
 
                 Column(
                     modifier = Modifier
                         .padding(end = 12.dp)
-                        .height(120.dp),
+                        .height(116.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Bottom
                 ) {
                     TextButton(
                         onClick = {
                             onJoin()
-                            showRow = !showRow
+                            expand = !expand
                         },
                         modifier = Modifier.width(92.dp),
                         shape = CircleShape,
-                        colors = buttonColors
+                        colors = buttonColors,
+                        enabled = !((!isJoined) && (meeting.studentsNumber == meeting.maxStudents))
                     ) {
                         Text(text = buttonLabel)
                     }
@@ -169,7 +176,7 @@ fun MeetingCard(
 @Composable
 fun PreviewMeetingCard() {
     ConectaTheme {
-        MeetingCard(
+        MeetingFullCard(
             meeting = Meeting(
                 date = LocalDate.now(),
                 startTime = LocalTime.now(),
@@ -184,10 +191,11 @@ fun PreviewMeetingCard() {
                 subject = Subject(
                     1, "Analisis Matematico"
                 ),
-                id = 0
+                id = 0,
+                studentsNumber = 1
             ) ,
             onJoin = {},
-            isJoined = true
+            isJoined = false
         )
     }
 }

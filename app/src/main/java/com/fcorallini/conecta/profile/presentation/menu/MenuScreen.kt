@@ -7,10 +7,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.outlined.Star
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -39,21 +44,23 @@ fun MenuContent(
     val context = LocalContext.current
     Scaffold(
         topBar = { TopBar(
-            title = "Perfil"
+            title = "Edita tu perfil"
         ) },
         bottomBar = { NavBar(navController) }
     ) {
-        Column(modifier = Modifier.padding(it).padding(12.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        Column(modifier = Modifier.padding(it).padding(horizontal = 4.dp, vertical = 8.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
             MenuItem(
                 text = "Mis carreras",
-                icon = Icons.Default.Star,
+                icon = Icons.Outlined.Star,
                 onClick = { navController.navigate(Routes.Careers) }
             )
+            HorizontalDivider(thickness = 1.dp, color = MaterialTheme.colorScheme.secondary, modifier = Modifier.padding(horizontal = 12.dp))
             MenuItem(
                 text = "Mis materias",
                 icon = Icons.Default.FavoriteBorder,
                 onClick = { navController.navigate(Routes.Subjects) }
             )
+            HorizontalDivider(thickness = 1.dp, color = MaterialTheme.colorScheme.secondary, modifier = Modifier.padding(horizontal = 12.dp))
             MenuItem(
                 text = "Logout",
                 icon = Icons.Default.ExitToApp,

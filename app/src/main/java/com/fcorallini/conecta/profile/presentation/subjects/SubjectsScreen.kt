@@ -4,6 +4,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -39,13 +43,14 @@ fun SubjectsContent(
     ) {
         LazyColumn(modifier = Modifier
             .padding(it)
-            .padding(12.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            .padding(12.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
             items(state.subjects) {
                 ProfileItem(
                     id = it.id,
                     name = it.name,
                     selectedIds = state.followedSubjectsIds,
                     onItemClick = { onEvent(SubjectsEvent.Follow(it.id)) },
+                    Icons.Default.CheckCircle
                 )
             }
         }

@@ -14,6 +14,7 @@ import com.auth0.android.provider.WebAuthProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import com.auth0.android.callback.Callback
+import com.fcorallini.conecta.BuildConfig
 import com.fcorallini.conecta.authentication.domain.usecases.SaveJwtTokenUseCase
 import com.fcorallini.conecta.core.domain.usecases.SaveUserEmailUseCase
 import com.fcorallini.conecta.core.domain.usecases.SaveUserIdUseCase
@@ -31,8 +32,8 @@ class LoginViewModel @Inject constructor(
         private set
 
     private val account = Auth0(
-        "RNIxDz64G7qNKKiLReFaYJ3BJEJxYYa3",
-        "dev-a8n8uoz6yo02wcvy.us.auth0.com"
+        BuildConfig.AUTH_CLIENT_ID,
+        BuildConfig.AUTH_DOMAIN
     )
 
 

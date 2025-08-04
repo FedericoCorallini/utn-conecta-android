@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.fcorallini.conecta.core.domain.model.Subject
 import com.fcorallini.conecta.profile.domain.usecases.GetFollowedSubjectsIdsUseCase
 import com.fcorallini.conecta.profile.domain.usecases.GetSubjectsOfInterestUseCase
 import com.fcorallini.conecta.profile.domain.usecases.SetStudentProfileUseCase
@@ -24,7 +25,7 @@ class SubjectsViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            val subjects = getSubjectsOfInterestUseCase()
+            val subjects = getSubjectsOfInterestUseCase().sortedBy { subject: Subject -> subject.name }
             val studentSubjects = getFollowedSubjectsIdsUseCase()
             val (followed, notFollowed) = subjects.partition { studentSubjects.contains(it.id) }
             state = state.copy(

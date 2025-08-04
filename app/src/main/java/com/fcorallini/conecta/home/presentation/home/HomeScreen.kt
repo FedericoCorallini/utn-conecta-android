@@ -1,18 +1,11 @@
-package com.fcorallini.conecta.home.presentation
+package com.fcorallini.conecta.home.presentation.home
 
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -25,6 +18,7 @@ import com.fcorallini.conecta.core.presentation.components.MeetingCard
 import com.fcorallini.conecta.core.presentation.components.NavBar
 import com.fcorallini.conecta.core.presentation.components.TopBar
 import com.fcorallini.conecta.core.presentation.theme.ConectaTheme
+import com.fcorallini.conecta.navigation.Routes
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -44,32 +38,19 @@ fun HomeContent(
 ) {
     Scaffold(
         topBar = { TopBar(
-            title = "Home"
+            title = "Reuniones propuestas"
         ) },
         bottomBar = { NavBar(navController) }
     ) {
-        LazyColumn(modifier = Modifier.padding(it).padding(horizontal = 8.dp)) {
-
-            item {
-                OutlinedTextField(
-                    value = "",
-                    onValueChange = {},
-                    placeholder = { Text("Buscar materia...") },
-                    singleLine = true,
-                    keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Search),
-                    keyboardActions = KeyboardActions(
-                        onSearch = {  }
-                    ),
-                    modifier = Modifier
-                        .fillMaxWidth().padding(horizontal = 8.dp).padding(bottom = 12.dp),
-                    shape = CircleShape
-                )
-            }
+        LazyColumn(modifier = Modifier
+            .padding(it)
+            .padding(horizontal = 8.dp, vertical = 4.dp)) {
             items(state.meetingList) { meeting ->
                 MeetingCard(
                     meeting = meeting,
                     isJoined = state.joinedMeetingIds.contains(meeting.id),
-                    onJoin = {event.invoke(HomeEvent.JoinOrLeaveEvent(meeting.id))}
+                    onJoin = {event.invoke(HomeEvent.JoinOrLeaveEvent(meeting.id))},
+                    onClick = { navController.navigate(Routes.Detail(meeting.id)) }
                 )
             }
         }
@@ -97,14 +78,15 @@ fun PreviewHomeScreen() {
                         subject = Subject(
                             1, "Analisis Matematico"
                         ),
-                        id = 1
+                        id = 1,
+                        studentsNumber = 1
                     ),
                     Meeting(
                         date = LocalDate.now(),
                         startTime = LocalTime.now(),
                         endTime = LocalTime.now(),
                         maxStudents = 4,
-                        title = "Para el final",
+                        title = "Para el final y que pasas si aca le pongo un titulo recontra largo y te rompo toda la ui",
                         studyPlace = StudyPlace(
                             id = null,
                             location = "Biblioteca",
@@ -113,7 +95,8 @@ fun PreviewHomeScreen() {
                         subject = Subject(
                             1,"Analisis Matematico"
                         ),
-                        id = 0
+                        id = 0,
+                        studentsNumber = 1
                     )
                 ), joinedMeetingIds = listOf(1)
             ),

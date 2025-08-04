@@ -12,6 +12,6 @@ class GetMeetingsUseCase @Inject constructor(
     suspend operator fun invoke() : List<Meeting> {
         val userId = getUserIdUseCase()
         val meetings = repository.getMeetingsForStudent(userId)
-        return meetings.getOrDefault(emptyList())
+        return meetings.getOrDefault(emptyList()).sortedBy { meeting: Meeting -> meeting.date }
     }
 }

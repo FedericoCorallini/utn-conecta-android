@@ -1,6 +1,9 @@
 package com.fcorallini.conecta.core.presentation.components
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -9,8 +12,14 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import com.fcorallini.conecta.R
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
@@ -20,11 +29,12 @@ fun TopBar(
     showBack: Boolean = false,
     actions: @Composable RowScope.() -> Unit = {}
 ) {
-    CenterAlignedTopAppBar(
+    TopAppBar(
         title = {
             Text(
                 text = title,
                 style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onSurface
             )
         },
@@ -38,9 +48,15 @@ fun TopBar(
                 }
             }
         },
-        actions = actions,
+        actions = {
+            Image(
+                painter = painterResource(id = R.drawable.logo),
+                contentDescription = null,
+                modifier = Modifier.size(100.dp).padding(end = 12.dp)
+            )
+        },
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-            containerColor = MaterialTheme.colorScheme.surface
+            containerColor = MaterialTheme.colorScheme.inversePrimary.copy(alpha = 0.05f)
         )
     )
 }
